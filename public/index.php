@@ -478,6 +478,9 @@ $app->get('/animes/curiosidades/xml', function ($request, $response) {
 
 //GET
 $app->addBodyParsingMiddleware();
+$app->addRoutingMiddleware();
+$app->addErrorMiddleware(true, true, true);
+
 $produtos = [
 ['id' => 1, 'nome' => 'Teclado'],
 ['id' => 2, 'nome' => 'Mouse'],
