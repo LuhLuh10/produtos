@@ -523,4 +523,32 @@ $app->get('/produtos',function ($request, $response, $args) use  (&$produtos) {
      return$response->withHeader('Content-Type','application/json')->withStatus(200);
 }
 });
+
+/*
+
+
+                                   ATIVIDADE 4 - PUT
+
+
+
+*/
+
+//PUT
+$app->put('/produtos/{id}', function ($request, $response, $args) use (&$produtos) {
+    $dados = $request->getParsedBody();
+    foreach ($produtos as &$produto) {
+    if ($produto['id'] === (int) $args['id']) {
+        $produto['nome' ] = $dados['nome'];
+        $response->getBody()->write(json_encode($produto));
+        return $response->withHeader('Content-Type', 'application/json')->withStatus(200);
+    }
+  }
+return $response->withStatus(404);
+});
+
+//DELETE
+$app->delete('/produtos/{id}', function ($request, $response, $args) use (&$produtos) {
+    $produtos = array_values(array_filter($produtos, fn($p) => $p['id'] !== (int) $args['id']));
+    return $response->withStatus(204);
+});
 $app->run();
